@@ -25,12 +25,6 @@ public class Game {
 
     private String away;
 
-    private String stadium;
-
-    private Integer attendance;
-
-    private LocalDateTime gameDate;
-
     private String status;
 
 }
