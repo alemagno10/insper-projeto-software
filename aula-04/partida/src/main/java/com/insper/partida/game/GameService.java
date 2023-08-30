@@ -52,8 +52,8 @@ public class GameService {
 
         Game game = new Game();
         game.setIdentifier(UUID.randomUUID().toString());
-        game.setHome(teamM);
-        game.setAway(teamV);
+        game.setHome(teamM.getIdentifier());
+        game.setAway(teamV.getIdentifier());
         game.setAttendance(0);
         game.setScoreHome(0);
         game.setScoreAway(0);
@@ -87,7 +87,7 @@ public class GameService {
     public Integer getScoreTeam(String identifier) {
         Team team = teamService.getTeam(identifier);
 
-        return gameRepository.sumScoreTeamHome(team);
+        return 0;
     }
 
     public GameReturnDTO getGame(String identifier) {
