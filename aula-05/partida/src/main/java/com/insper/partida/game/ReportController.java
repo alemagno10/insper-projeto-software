@@ -31,13 +31,19 @@ public class ReportController {
         }
 
         HashMap<Integer, Integer> count = new HashMap<>();
-        for (int i = 0; i < 100; i++) {
-            for (int j = 0 ; j < nums.size(); j++) {
-                if (nums.get(j) == i) {
-                    count.merge(i, 1, Integer::sum);
-                }
-            }
+
+        // for (int i = 0; i < 100; i++) {
+        //     for (int j = 0 ; j < nums.size(); j++) {
+        //         if (nums.get(j) == i) {
+        //             count.merge(i, 1, Integer::sum);
+        //         }
+        //     }
+        // }
+
+        for (int j = 0 ; j < nums.size(); j++) {
+            count.merge(nums.get(j), 1, Integer::sum);
         }
+        
         return count;
     }
 
@@ -55,6 +61,8 @@ public class ReportController {
                 .filter(g -> g.getHome().equals(team) || g.getAway().equals(team))
                 .limit(10)
                 .toList();
+
+                // ----> .findByHomeOrAwayLimit10(team, away);
 
         return games.stream().map(g -> GameReturnDTO.covert(g)).toList();
 

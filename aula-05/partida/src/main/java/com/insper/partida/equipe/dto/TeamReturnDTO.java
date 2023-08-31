@@ -1,6 +1,5 @@
 package com.insper.partida.equipe.dto;
 
-import com.insper.partida.equipe.Team;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,10 +9,10 @@ public class TeamReturnDTO {
     private String identifier;
     private String name;
 
-    public static TeamReturnDTO covert(Team game) {
+    public static TeamReturnDTO covert(String identifier, String name) {
         TeamReturnDTO teamReturnDTO = new TeamReturnDTO();
-        teamReturnDTO.setIdentifier(game.getIdentifier());
-        teamReturnDTO.setName(game.getName());
+        teamReturnDTO.setIdentifier(identifier);
+        teamReturnDTO.setName(name);
         return teamReturnDTO;
     }
 }
