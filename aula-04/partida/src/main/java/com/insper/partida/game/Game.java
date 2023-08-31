@@ -1,6 +1,5 @@
 package com.insper.partida.game;
 
-import com.insper.partida.equipe.Team;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -26,5 +25,9 @@ public class Game {
     private String away;
 
     private String status;
+
+    private LocalDateTime gameDate;
+
+    private Integer attendance;
 
 }

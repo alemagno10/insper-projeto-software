@@ -16,7 +16,7 @@ public class  TeamService {
 
 
     public List<TeamReturnDTO> listTeams() {
-        return teamRepository.findAll().stream().map(team -> TeamReturnDTO.covert(team)).collect(Collectors.toList());
+        return teamRepository.findAll().stream().map(team -> TeamReturnDTO.covert(team.getIdentifier(), team.getName())).collect(Collectors.toList());
     }
 
     public TeamReturnDTO saveTeam(SaveTeamDTO saveTeam) {
@@ -25,7 +25,7 @@ public class  TeamService {
         team.setIdentifier(saveTeam.getIdentifier());
 
         team = teamRepository.save(team);
-        return  TeamReturnDTO.covert(team);
+        return  TeamReturnDTO.covert(team.getIdentifier(), team.getName());
     }
 
 

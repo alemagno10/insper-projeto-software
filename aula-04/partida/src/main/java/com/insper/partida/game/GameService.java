@@ -2,7 +2,6 @@ package com.insper.partida.game;
 
 import com.insper.partida.equipe.Team;
 import com.insper.partida.equipe.TeamService;
-import com.insper.partida.equipe.dto.TeamReturnDTO;
 import com.insper.partida.game.dto.EditGameDTO;
 import com.insper.partida.game.dto.GameReturnDTO;
 import com.insper.partida.game.dto.SaveGameDTO;
@@ -12,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -86,7 +84,6 @@ public class GameService {
 
     public Integer getScoreTeam(String identifier) {
         Team team = teamService.getTeam(identifier);
-
         return 0;
     }
 
