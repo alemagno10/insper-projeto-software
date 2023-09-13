@@ -5,22 +5,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.insper.partida.game.GameService;
-
-import java.util.*;;
+import java.util.List;
 
 @RestController
 @RequestMapping("/tabela")
-public class TabelaController{
+public class TabelaController {
 
     @Autowired
     private TabelaService tabelaService;
 
-    @Autowired
-    private GameService gameService;
-
     @GetMapping
-    public List<TimeDTO> getTabela(){
-
+    public List<TimeDTO> getTabela() {
+        return tabelaService.getTabela();
     }
+
 }

@@ -7,6 +7,11 @@ import lombok.Setter;
 @Setter
 public class TimeDTO {
     private String nome;
-    private Integer pontos;
-    private Integer golsPro;
+    private Integer pontos  = 0;
+    private Integer golsPro = 0;
+    private Integer golsContra = 0;
+    private Integer vitorias = 0;
+    private Integer derrotas = 0;
+    private Integer empates = 0;
+    private Integer jogos = 0;
 }
