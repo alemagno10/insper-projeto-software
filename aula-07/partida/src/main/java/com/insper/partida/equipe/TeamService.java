@@ -9,11 +9,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class  TeamService {
+public class TeamService {
 
     @Autowired
     private TeamRepository teamRepository;
-
 
     public List<TeamReturnDTO> listTeams() {
         return teamRepository.findAll().stream().map(team -> TeamReturnDTO.covert(team)).collect(Collectors.toList());

@@ -18,5 +18,4 @@ public class TabelaController {
     public List<TimeDTO> getTabela() {
         return tabelaService.getTabela();
     }
-
 }

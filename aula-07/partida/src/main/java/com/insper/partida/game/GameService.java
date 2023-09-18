@@ -3,7 +3,6 @@ package com.insper.partida.game;
 import com.insper.partida.equipe.Team;
 import com.insper.partida.equipe.TeamService;
 import com.insper.partida.equipe.dto.SaveTeamDTO;
-import com.insper.partida.equipe.dto.TeamReturnDTO;
 import com.insper.partida.game.dto.EditGameDTO;
 import com.insper.partida.game.dto.GameReturnDTO;
 import com.insper.partida.game.dto.SaveGameDTO;
@@ -40,7 +39,7 @@ public class GameService {
             Page<Game> games =  gameRepository.findByAttendanceGreaterThan(attendance, pageable);
             return games.map(game -> GameReturnDTO.covert(game));
         }
-        Page<Game> games =  gameRepository.findAll(pageable);
+        Page<Game> games = gameRepository.findAll(pageable);
         return games.map(game -> GameReturnDTO.covert(game));
     }
 
@@ -125,21 +124,18 @@ public class GameService {
             }
 
             Game game = new Game();
+            game.setIdentifier(UUID.randomUUID().toString());
             game.setHome(teams[team1]);
             game.setAway(teams[team2]);
             game.setScoreHome(new Random().nextInt(4));
             game.setScoreAway(new Random().nextInt(4));
             game.setStadium(teams[team1]);
             game.setAttendance(new Random().nextInt(4) * 1000);
+            // games.add(game);
 
-            //gameRepository.save(game);
-            games.add(game);
-
+            gameRepository.save(game);
+            editGame(game.getIdentifier(), EditGameDTO.covert(game));
         }
-
-        gameRepository.saveAll(games);
-
-
     }
 
     public List<Game> getGameByTeam(String identifier) {

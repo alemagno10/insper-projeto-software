@@ -8,8 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/game")
 public class GameController {
@@ -50,7 +48,6 @@ public class GameController {
     public Integer getScoreTeam(@PathVariable String id) {
         return gameService.getScoreTeam(id);
     }
-
 
     @PostMapping("/generateData")
     public void generateData() {
