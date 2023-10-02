@@ -3,7 +3,6 @@ package com.insper.partida.game;
 import com.insper.partida.equipe.Team;
 import com.insper.partida.equipe.TeamService;
 import com.insper.partida.equipe.dto.SaveTeamDTO;
-import com.insper.partida.equipe.dto.TeamReturnDTO;
 import com.insper.partida.game.dto.EditGameDTO;
 import com.insper.partida.game.dto.GameReturnDTO;
 import com.insper.partida.game.dto.SaveGameDTO;
@@ -88,7 +87,7 @@ public class GameService {
     }
 
     public Integer getScoreTeam(String identifier) {
-        Team team = teamService.getTeam(identifier);
+        // Team team = teamService.getTeam(identifier);
 
         return 0;
     }
