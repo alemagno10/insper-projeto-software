@@ -8,7 +8,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 public class ErrorDTO {
-    String message;
-    Integer code;
-    LocalDate time;
+    private String message;
+    private Integer code;
+    private LocalDate time;
 }
