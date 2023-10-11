@@ -23,5 +23,4 @@ public class UserController {
     public ReturnUserDTO saveUser(@RequestBody SaveUserDTO saveUser) {
         return userService.saveUser(saveUser);
     }
-
 }
