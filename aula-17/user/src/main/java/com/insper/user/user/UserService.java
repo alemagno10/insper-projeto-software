@@ -33,11 +33,12 @@ public class UserService {
         return ReturnUserDTO.convert(userRepository.save(user));
     }
 
-    public boolean valideUser(String email, String password){
+    public ReturnUserDTO valideUser(String email, String password){
         String encoded = DigestUtils.md5DigestAsHex(password.getBytes()).toUpperCase();
-        if(!userRepository.existsByEmailAndPassword(email, encoded)){
-            throw new RuntimeException();
+        User user = userRepository.findByEmailAndPassword(email, encoded);
+        if(user == null){
+            throw new RuntimeException("User not found ");
         } 
-        return true;
+        return ReturnUserDTO.convert(user);
     }
 }

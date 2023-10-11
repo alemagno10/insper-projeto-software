@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import com.insper.user.user.UserService;
+import com.insper.user.user.LoginService;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -18,7 +18,7 @@ import java.util.List;
 public class LoginFilter implements Filter {
 
     @Autowired
-    UserService userService;
+    LoginService loginService;
     
     List<String> openRoutes = Arrays.asList("/user");
 
@@ -30,18 +30,18 @@ public class LoginFilter implements Filter {
 
         HttpServletRequest req = (HttpServletRequest) request;
         
-        String email = req.getHeader("email");
-        String password = req.getHeader("password");
+        String token = req.getHeader("token");
 
         String uri = req.getRequestURI();
         String method = req.getMethod();
 
-        if(uri.equals("GET") && openRoutes.contains(method)){
+        if(method.equals("GET") && openRoutes.contains(uri)){
+            chain.doFilter(request, response);
+        } else if(method.equals("POST") && uri.equals("/login")){
             chain.doFilter(request, response);
         } else {
-            // userService.valideUser(email, password);
+            loginService.get(token);
+            chain.doFilter(request, response);
         }
-
-        chain.doFilter(request, response);
     }
 }
