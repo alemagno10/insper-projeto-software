@@ -24,17 +24,15 @@ public class TeamService {
         team.setIdentifier(saveTeam.getIdentifier());
 
         team = teamRepository.save(team);
-        return  TeamReturnDTO.covert(team);
+        return TeamReturnDTO.covert(team);
     }
 
 
     public void deleteTeam(String identifier) {
-
         Team team = teamRepository.findByIdentifier(identifier);
         if (team != null) {
             teamRepository.delete(team);
         }
-
     }
 
     public Team getTeam(String identifier) {

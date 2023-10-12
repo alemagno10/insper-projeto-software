@@ -11,7 +11,7 @@ import lombok.*;
 public class Tabela {
     @Id
     private String id;
-    
+    private String identifier;
     private String nome;
     private Integer pontos;
     private Integer vitorias;

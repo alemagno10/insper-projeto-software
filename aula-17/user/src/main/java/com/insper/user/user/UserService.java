@@ -37,7 +37,7 @@ public class UserService {
         String encoded = DigestUtils.md5DigestAsHex(password.getBytes()).toUpperCase();
         User user = userRepository.findByEmailAndPassword(email, encoded);
         if(user == null){
-            throw new RuntimeException("User not found ");
+            throw new RuntimeException("User not found");
         } 
         return ReturnUserDTO.convert(user);
     }

@@ -28,6 +28,4 @@ public class TeamController {
     public void deleteTeam(@PathVariable String identifier) {
         teamService.deleteTeam(identifier);
     }
-
-
 }

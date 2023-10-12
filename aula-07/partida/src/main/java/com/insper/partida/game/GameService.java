@@ -28,7 +28,7 @@ public class GameService {
     @Autowired
     private TeamService teamService;
 
-     @Autowired 
+    @Autowired 
     private TabelaRepository tabelaRepository;
 
     public Page<GameReturnDTO> listGames(String home, String away, Integer attendance, Pageable pageable) {

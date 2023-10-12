@@ -1,4 +1,4 @@
-package com.insper.user.common;
+package com.insper.partida.common;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
@@ -7,21 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import com.insper.user.user.LoginService;
+import com.insper.partida.common.Partida.PartidaService;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 @Component
 @Order(1)
 public class LoginFilter implements Filter {
 
     @Autowired
-    LoginService loginService;
-    
-    List<String> openRoutesGET = Arrays.asList("/user", "/login");
-    List<String> openRoutesPOST = Arrays.asList("/login");
+    PartidaService partidaService;
 
     @Override
     public void doFilter(
@@ -32,17 +27,10 @@ public class LoginFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         
         String token = req.getHeader("token");
-
         String uri = req.getRequestURI();
         String method = req.getMethod();
 
-        if(method.equals("GET") && (openRoutesGET.contains(uri) || uri.startsWith("/login/token"))){
-            chain.doFilter(request, response);
-        } else if(method.equals("POST") && (openRoutesPOST.contains(uri))){
-            chain.doFilter(request, response);
-        } else {
-            loginService.get(token);
-            chain.doFilter(request, response);
-        }
+        partidaService.checkUser(token);
+        chain.doFilter(request, response);
     }
 }
