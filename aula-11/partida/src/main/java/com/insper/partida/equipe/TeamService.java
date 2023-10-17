@@ -4,7 +4,6 @@ import com.insper.partida.equipe.Exception.MissingRequiredFieldsException;
 import com.insper.partida.equipe.Exception.TeamNotFoundException;
 import com.insper.partida.equipe.dto.SaveTeamDTO;
 import com.insper.partida.equipe.dto.TeamReturnDTO;
-import com.insper.partida.equipe.exception.TeamAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +36,6 @@ public class TeamService {
 
 
     public void deleteTeam(String identifier) {
-
         Team team = teamRepository.findByIdentifier(identifier);
         if (team != null) {
             teamRepository.delete(team);
@@ -48,6 +46,7 @@ public class TeamService {
 
     public Team getTeam(String identifier) {
         Team team = teamRepository.findByIdentifier(identifier);
+        if(team == null) throw new TeamNotFoundException();
         return team;
     }
 

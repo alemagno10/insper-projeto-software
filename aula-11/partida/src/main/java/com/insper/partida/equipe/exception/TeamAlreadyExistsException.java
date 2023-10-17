@@ -1,9 +1,9 @@
-package com.insper.partida.equipe.exception;
+package com.insper.partida.equipe.Exception;
 
 public class TeamAlreadyExistsException extends RuntimeException {
 
-    public  TeamAlreadyExistsException() {
-        super("Time já existe!");
+    public TeamAlreadyExistsException() {
+        super("Team Already Exists!");
     }
 
 }

@@ -2,7 +2,10 @@ package com.insper.partida.game;
 
 import com.insper.partida.equipe.Team;
 import com.insper.partida.equipe.TeamService;
+import com.insper.partida.equipe.Exception.MissingRequiredFieldsException;
 import com.insper.partida.equipe.dto.SaveTeamDTO;
+import com.insper.partida.game.Exception.DuplicateTeamException;
+import com.insper.partida.game.Exception.GameNotFoundException;
 import com.insper.partida.game.dto.EditGameDTO;
 import com.insper.partida.game.dto.GameReturnDTO;
 import com.insper.partida.game.dto.SaveGameDTO;
@@ -36,10 +39,11 @@ public class GameService {
             return games.map(game -> GameReturnDTO.covert(game));
 
         } else if (attendance != null) {
-            Page<Game> games =  gameRepository.findByAttendanceGreaterThan(attendance, pageable);
+            Page<Game> games = gameRepository.findByAttendanceGreaterThan(attendance, pageable);
             return games.map(game -> GameReturnDTO.covert(game));
         }
-        Page<Game> games =  gameRepository.findAll(pageable);
+
+        Page<Game> games = gameRepository.findAll(pageable);
         return games.map(game -> GameReturnDTO.covert(game));
     }
 
@@ -48,11 +52,11 @@ public class GameService {
         Team teamM = teamService.getTeam(saveGameDTO.getHome());
         Team teamV = teamService.getTeam(saveGameDTO.getAway());
 
-        if (teamM == null || teamV == null) {
-            return null; // enviar a mensagem de erro correta
-        }
+        // enviar a mensagem de erro correta
+        if (teamM == null || teamV == null) throw new MissingRequiredFieldsException();
 
         // validar se o time mandante é diferente do visitante
+        if(teamM.getIdentifier() == teamV.getIdentifier()) throw new DuplicateTeamException();
 
         Game game = new Game();
         game.setIdentifier(UUID.randomUUID().toString());
@@ -66,13 +70,13 @@ public class GameService {
 
         gameRepository.save(game);
         return GameReturnDTO.covert(game);
-
     }
 
     public GameReturnDTO editGame(String identifier, EditGameDTO editGameDTO) {
         Game gameBD = gameRepository.findByIdentifier(identifier);
 
-        // verificasr se o jogo existe
+        // verificar se o jogo existe
+        if(gameBD == null) throw new GameNotFoundException();
 
         gameBD.setScoreAway(editGameDTO.getScoreAway());
         gameBD.setScoreHome(editGameDTO.getScoreHome());
@@ -85,22 +89,22 @@ public class GameService {
 
     public void deleteGame(String identifier) {
         Game gameBD = gameRepository.findByIdentifier(identifier);
-        if (gameBD != null) {
-            gameRepository.delete(gameBD);
-        }
+
         //verificar se o jogo existe
+        if (gameBD == null) throw new GameNotFoundException();
+        gameRepository.delete(gameBD);
     }
 
     public Integer getScoreTeam(String identifier) {
-        // Team team = teamService.getTeam(identifier);
-
         return 0;
     }
 
     public GameReturnDTO getGame(String identifier) {
+        Game game = gameRepository.findByIdentifier(identifier);
 
-        // verificar se o gaame existe
-        return GameReturnDTO.covert(gameRepository.findByIdentifier(identifier));
+        // verificar se o game existe
+        if(game == null) throw new GameNotFoundException();
+        return GameReturnDTO.covert(game);
     }
 
     public void generateData() {
@@ -137,8 +141,6 @@ public class GameService {
             game.setScoreAway(new Random().nextInt(4));
             game.setStadium(teams[team1]);
             game.setAttendance(new Random().nextInt(4) * 1000);
-
-            //gameRepository.save(game);
             games.add(game);
 
         }
@@ -152,3 +154,4 @@ public class GameService {
         return gameRepository.findByHomeOrAway(identifier, identifier);
     }
 }
+
