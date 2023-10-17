@@ -9,8 +9,8 @@ import java.util.List;
 
 @Getter
 @Setter
-@Document
-public class User {
+@Document("user")
+public class UserMongo {
 
     @Id
     private String id;

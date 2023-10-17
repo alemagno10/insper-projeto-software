@@ -1,6 +1,6 @@
 package com.insper.user.user.dto;
 
-import com.insper.user.user.User;
+import com.insper.user.user.UserMongo;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +13,7 @@ public class ReturnUserDTO {
     private String password;
     private List<String> roles;
 
-    public static ReturnUserDTO convert(User user) {
+    public static ReturnUserDTO convert(UserMongo user) {
         ReturnUserDTO userDTO = new ReturnUserDTO();
         userDTO.setEmail(user.getEmail());
         userDTO.setRoles(user.getRoles());

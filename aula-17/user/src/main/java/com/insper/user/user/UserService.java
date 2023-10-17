@@ -3,8 +3,8 @@ package com.insper.user.user;
 import com.insper.user.user.dto.ReturnUserDTO;
 import com.insper.user.user.dto.SaveUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.DigestUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,6 +15,9 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public List<ReturnUserDTO> listUsers() {
         return userRepository
                 .findAll()
@@ -24,8 +27,8 @@ public class UserService {
     }
 
     public ReturnUserDTO saveUser(SaveUserDTO saveUser) {
-        User user = new User();
-        String encoded = DigestUtils.md5DigestAsHex(saveUser.getPassword().getBytes()).toUpperCase();
+        UserMongo user = new UserMongo();
+        String encoded = passwordEncoder.encode(saveUser.getPassword());
         user.setPassword(encoded);
         user.setEmail(saveUser.getEmail());
         user.setRoles(saveUser.getRoles());
@@ -34,8 +37,8 @@ public class UserService {
     }
 
     public ReturnUserDTO valideUser(String email, String password){
-        String encoded = DigestUtils.md5DigestAsHex(password.getBytes()).toUpperCase();
-        User user = userRepository.findByEmailAndPassword(email, encoded);
+        String encoded = passwordEncoder.encode(password);
+        UserMongo user = userRepository.findByEmailAndPassword(email, encoded);
         if(user == null){
             throw new RuntimeException("User not found");
         } 
